@@ -1,8 +1,9 @@
+import os
 import psycopg2
-from config.settings import data_base_url
 
+database_url = os.environ.get("DATABASE_URL")
 
-conn = psycopg2.connect(data_base_url)
+conn = psycopg2.connect(database_url)
 cur = conn.cursor()
 
 def insert_in_database(data):
