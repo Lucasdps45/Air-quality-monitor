@@ -3,10 +3,12 @@ import psycopg2
 
 database_url = os.environ.get("DATABASE_URL")
 
-conn = psycopg2.connect(database_url)
-cur = conn.cursor()
 
 def insert_in_database(data):
+    
+    conn = psycopg2.connect(database_url)
+    cur = conn.cursor()
+    
     for city_data in data:
         city_name = city_data["city_name"]
         measured_time = city_data["measured_at"]
@@ -33,6 +35,5 @@ def insert_in_database(data):
         query = f"INSERT INTO air_quality_data ({', '.join(collumns)}) VALUES ({placeholders})"
 
         cur.execute(query, values_to_insert)
-    
-conn.commit()
-conn.close()
+    conn.commit()
+    conn.close()
