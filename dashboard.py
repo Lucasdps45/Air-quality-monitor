@@ -5,6 +5,13 @@ import plotly.express as px
 import os
 from datetime import datetime, timedelta
 
+@st.cache_data(ttl=300)  # Cache por 5 minutos
+def get_data():
+    conn = psycopg2.connect(st.secrets["DATABASE_URL"])
+    df = pd.read_sql_query("SELECT * FROM air_quality_data", conn)
+    conn.close()
+    return df
+
 # Config
 st.set_page_config(page_title="Dashboard de Qualidade do Ar", layout="wide")
 st.title("🌍 Dashboard de Qualidade do Ar")
@@ -35,7 +42,7 @@ def get_db_connection():
     return psycopg2.connect(st.secrets["DATABASE_URL"])
 
 conn = get_db_connection()
-df = pd.read_sql_query("SELECT * FROM air_quality_data", conn)
+df = get_data()
 conn.close()
 
 df['measured_at'] = pd.to_datetime(df['measured_at'])
