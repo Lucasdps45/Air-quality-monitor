@@ -32,7 +32,7 @@ except KeyError:
 # Connect to DB
 @st.cache_resource
 def get_db_connection():
-    return psycopg2.connect(st.secrets["url"])
+    return psycopg2.connect(st.secrets["DATABASE_URL"])
 
 conn = get_db_connection()
 df = pd.read_sql_query("SELECT * FROM air_quality_data", conn)

@@ -1,5 +1,6 @@
 import requests
 from src.config.settings import api_key
+
 cities = {
     "São Paulo": (-23.5505, -46.6333),
     "Rio de Janeiro": (-22.9068, -43.1729),
