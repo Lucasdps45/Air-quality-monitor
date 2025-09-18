@@ -8,18 +8,18 @@ jobs:
   update-data:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout código
+    - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Configurar Python
+    - name: Config Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.10'
 
-    - name: Instalar dependências
+    - name: Install dependencies 
       run: pip install -r requirements.txt
 
-    - name: Executar pipeline
+    - name: Execute pipeline
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
         OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
