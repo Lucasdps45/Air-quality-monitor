@@ -14,7 +14,7 @@ def get_data():
 
 # Config
 st.set_page_config(page_title="Dashboard de Qualidade do Ar", layout="wide")
-st.title("🌍 Dashboard de Qualidade do Ar")
+st.title("🌍 Dashboard de Índice de Qualidade do Ar (AQI)")
 
 # AQI function
 def get_aqi_status(aqi_value):
@@ -81,7 +81,7 @@ CITIES = {
 }
 
 selected_city = st.sidebar.selectbox(
-    "Select city:",
+    "Selecione a cidade:",
     options=list(CITIES.keys()),
     index=0
 )
@@ -109,7 +109,7 @@ if not city_data.empty:
         """, unsafe_allow_html=True)
     
     # MIDDLE ROW: Pollutants grid
-    st.subheader("Pollutants Concentration (µg/m³)")
+    st.subheader("Concentração de poluentes (µg/m³)")
     cols = st.columns(6)
     
     pollutants = {
@@ -126,14 +126,17 @@ if not city_data.empty:
             st.metric(name, f"{value:.2f}")
     
     # BOTTOM: Evolution chart
-    st.subheader("Daily AQI Variation")
+    st.subheader("Variação diária do AQI")
     weekly_data = city_data[city_data['measured_at'] >= (datetime.now() - timedelta(days=7))]
     
     if not weekly_data.empty:
-        fig = px.line(weekly_data, 
-                     x='measured_at', 
-                     y='aqi',
-                     title=f'AQI Evolution in {selected_city}')
+        fig = px.line(weekly_data,
+              x='measured_at',
+              y='aqi', 
+              title=f'Evolução do AQI em {selected_city}',
+              labels={'aqi': 'AQI (Quanto menor, melhor)',
+                      'measured_at': 'Data da medição'})  
+
         st.plotly_chart(fig)
     else:
         st.warning("Insufficient data for historical analysis")
