@@ -1,5 +1,5 @@
 from datetime import datetime
-
+import json
 def parse_air_quality_data(data):
     
     all_cities_parsed_data = []
@@ -7,6 +7,9 @@ def parse_air_quality_data(data):
     
 
     for city_name, raw_data in data:
+       
+
+        print(json.dumps(raw_data, indent=2))
         aqi = raw_data["list"][0]["main"]["aqi"]
         timestamp = raw_data["list"][0]["dt"]
         readable_time = datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M:%S")
