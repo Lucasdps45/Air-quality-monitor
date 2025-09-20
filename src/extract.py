@@ -1,5 +1,7 @@
 import requests
-from src.config.settings import api_key
+import os
+
+api_key = os.environ.get("API_KEY")
 
 cities = {
     "São Paulo": (-23.5505, -46.6333),
